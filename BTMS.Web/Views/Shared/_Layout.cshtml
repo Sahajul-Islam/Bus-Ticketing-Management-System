@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+     <environment include="Development">
+        <link rel="stylesheet" href="~/libs/bootstrap/css/bootstrap.css" />
+        <script src="~/libs/bootstrap/js/bootstrap.bundle.js"></script>
+    </environment>
+    <style>
+        body {
+            padding-top: 70px;
+        }
+
+        .main {
+            min-height: calc(100vh - 170px);
+        }
+    </style>
+    @await RenderSectionAsync("styles", false)
+</head>
+<body>
+     <div class="navbar navbar-light bg-white navbar-expand-md fixed-top border-bottom shadow-sm">
+        <div class="container-fluid">
+
+
+            <span class="navbar-brand">BTMS</span>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Brands" asp-action="Index">Brands</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Devices" asp-action="Index">Devices</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid main">
+        @RenderBody()
+
+    </div>
+
+    <footer class="container-fluid ">
+        <hr />
+        <p>&copy; @DateTime.Now.Year - BTMS</p>
+    </footer>
+    @await RenderSectionAsync("scripts", false)
+</body>
+</html>

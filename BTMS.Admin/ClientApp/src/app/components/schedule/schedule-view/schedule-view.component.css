@@ -1,0 +1,11 @@
+.fw-40{
+    width: 40%;
+}
+.filter-form-container
+{
+    
+    display: grid;
+    grid-template-columns: 300px auto;
+    align-items: center;
+    gap: 10px;
+}

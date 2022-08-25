@@ -1,0 +1,11 @@
+If you have multiple sdk, change default
+1. dotnet new globaljson --sdk-version 3.1.416
+===========================================================
+1. Make your api project as startup
+2. Open your api project in folder explorer
+3. Open command prompt int the current directory
+4. Run the command
+dotnet ef migrations add "bd_2" --project ..\BTMS.DataLib\BTMS.DataLib.csproj --startup-project .\BTMS.Data.csproj -c BusDbContext
+==================================================================================================================================
+dotnet ef database update "bd_2" --project ..\BTMS.DataLib\BTMS.DataLib.csproj --startup-project .\BTMS.Data.csproj -c BusDbContext
+dotnet ef database update -c AppDbContext

@@ -1,0 +1,68 @@
+<div class="view-container">
+    <div class="form-container">
+        <mat-card class="mat-elevation-z5">
+            <mat-card-header >
+              <mat-card-title>Update info</mat-card-title>
+              <mat-card-subtitle>Fill the form</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+               
+              <form [formGroup]="editForm" (ngSubmit)="save()">
+                <mat-form-field  appearance="fill" class="fw">
+                    <mat-label>Company Name</mat-label>
+                    <input matInput type="text" formControlName="companyName">
+                    <mat-error *ngIf="editForm.controls['companyName'].hasError('required')">
+                      BusPlateNumber is <strong>required</strong>
+                    </mat-error>
+                  
+                  </mat-form-field>
+
+                  <mat-form-field  appearance="fill" class="fw">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="companyEmail">
+                    
+                    <mat-error *ngIf="editForm.controls['companyEmail'].hasError('required')">
+                      Email is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="editForm.touched && editForm.controls['companyEmail'].hasError('email')">
+                      Email is not <strong>valid</strong> 
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field  appearance="fill" class="fw">
+                    <mat-label>Address</mat-label>
+                    <textarea matInput type="text" formControlName="companyAddress"></textarea>
+                    <mat-error *ngIf="editForm.controls['companyAddress'].hasError('required')">
+                      Address is <strong>required</strong>
+                    </mat-error>
+                  
+                </mat-form-field>
+
+                  <mat-form-field  appearance="fill" class="fw">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput type="text" formControlName="companyPhoneNumber">
+                    <mat-error *ngIf="editForm.controls['companyPhoneNumber'].hasError('required')">
+                        Phone Number is <strong>required</strong>
+                    </mat-error>
+                    
+                  </mat-form-field>
+
+                  
+
+                  
+                 
+                  <div  appearance="fill" class="fw">
+                    <button type="submit" [disabled]="editForm.invalid" mat-raised-button color="primary">Save</button>
+                  </div>
+                  
+              </form>
+         
+            </mat-card-content>
+            <mat-card-content>
+              <mat-card-actions>
+                <a mat-button [routerLink]="['/home']"><mat-icon>arrow_back</mat-icon> Back to home</a>
+              </mat-card-actions>
+            </mat-card-content>
+          </mat-card>
+    </div>
+</div>

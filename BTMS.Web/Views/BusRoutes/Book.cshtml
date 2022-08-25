@@ -1,0 +1,137 @@
+﻿@model IEnumerable<SeatViewModel>
+@{
+    ViewData["Title"] = "Book";
+}
+
+<div class="row">
+    <div class="col-6">
+        <h3 style="padding-bottom: 5px; border-bottom: solid 1px lightgray;">Select Seat</h3>
+        <div class="seat-plan">
+
+            @foreach (var x in Model)
+            {
+                <div class="seat">
+                    @if (x.SeatSerial != 0)
+                    {
+                        @if (x.Status)
+                        {
+                            <a class="book disabledb" data-serial="@x.SeatSerial">
+                                <div style="width: 50px; text-align: center;" class="small">@x.SeatSerial</div>
+                                <img src="~/Assets/seat.svg" style="width: 50px;" />
+
+                                <div style="width: 50px; text-align: center;">
+
+                                    <i class="bi bi-check-all"></i>
+
+                                </div>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="book">
+                                <div style="width: 50px; text-align: center;" class="small">@x.SeatSerial</div>
+                                <img src="~/Assets/seat-booked.svg" style="width: 50px;" />
+                                <div style="width: 50px; text-align: center;">
+
+                                    <i class="bi bi-dash"></i>
+
+                                </div>
+                            </a>
+                        }
+
+                    }
+                    @if (x.SeatSerial == 0)
+                    {
+                        <div></div>
+                    }
+
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-6">
+    </div>
+</div>
+@section styles {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/libs/icons/bootstrap/font/bootstrap-icons.css" />
+        <style>
+            .booking-container {
+                display: grid;
+                grid-template-columns: 49% 49%;
+                align-items: stretch;
+            }
+
+            .col-1 {
+                padding: 10px;
+            }
+
+            .col-2 {
+                padding: 10px;
+            }
+
+            .seat-plan {
+                display: grid;
+                padding: 10px;
+                column-gap: 10px;
+                row-gap: 3px;
+                grid-template-columns: 60px 60px 30px 60px 60px;
+                width: 320px;
+            }
+
+            .seat {
+                border: solid 1px lightgrey;
+                border-radius: .75rem;
+                padding: 2px;
+                cursor: pointer;
+            }
+
+
+                .seat img {
+                    width: 40px;
+                    height: 40px;
+                    padding: 2px;
+                }
+
+            a.disabledb {
+                color: gray;
+                cursor: not-allowed;
+            }
+
+            .small {
+                font-size: .5rem;
+                padding: 0;
+                margin: 0;
+                padding-bottom: 1px;
+            }
+
+            .form {
+                width: 98%;
+                margin: 10px auto;
+            }
+
+            .message {
+                padding: 10px 25px;
+                margin: 10px 50px;
+                border: solid 1px lightgray;
+                border-radius: .5rem;
+            }
+        </style>
+    </environment>
+
+}
+    @section scripts {
+    <environment include="Development">
+        <script src="~/libs/jquery/jquery.js"></script>
+        <script>
+            $(() => {
+                $("a.book").click(function(evt) {
+                    console.log($(this).attr("class"));
+                    evt.preventDefault();
+                });
+            });
+        </script>
+    </environment>
+}
+

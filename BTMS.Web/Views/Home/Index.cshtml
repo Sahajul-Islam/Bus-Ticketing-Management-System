@@ -1,0 +1,51 @@
+﻿@model FilterViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="row">
+    <div class="col-12">
+        <form asp-controller="BusRoutes" asp-action="Search" method="post">
+            <div class="col-12 text-center">
+                <h3>Find a bus</h3>
+            </div>
+            <div class="form-group row mb-2">
+
+                <div class="col-2 offset-3">
+                    <input type="text" asp-for="Date" class="form-control form-control-sm" />
+                </div>
+
+                <div class="col-2">
+                    <input asp-for="From" placeholder="From.." class="form-control form-control-sm" />
+                </div>
+
+
+                <div class="col-2">
+                    <input asp-for="To" placeholder="To.." class="form-control form-control-sm" />
+                </div>
+                
+            </div>
+            <div class="col-12">
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-outline-primary btn">Find a bus</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section styles {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.css" />
+    </environment>
+}
+    @section scripts {
+    <environment include="Development">
+        <script src="~/libs/jquery/jquery.js"></script>
+        <script src="~/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+        <script>
+            $("#Date").datepicker({
+                format: "yyyy-mm-dd"
+            });
+        </script>
+    </environment>
+}

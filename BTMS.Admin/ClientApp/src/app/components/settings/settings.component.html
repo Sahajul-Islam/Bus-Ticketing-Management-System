@@ -1,0 +1,225 @@
+<div class="view-container">
+  <h1 class="mat-h1">Settings</h1>
+  <mat-divider></mat-divider>
+
+  <mat-card class="mat-elevation-z5">
+    <mat-card-header>
+      <div mat-card-avatar><img src="../../../assets/ticket-window-svgrepo-com.svg" width="50" /></div>
+      <mat-card-title>Companies</mat-card-title>
+      <mat-card-subtitle>Company List</mat-card-subtitle>
+
+    </mat-card-header>
+    <mat-card-content>
+      <div class="link-right">
+        <button  mat-mini-fab color="warn" (click)="toggleCompanyform()">
+          <mat-icon *ngIf="!companyFormOpen">add</mat-icon>
+          <mat-icon *ngIf="companyFormOpen">remove</mat-icon>
+        </button>
+      </div>
+
+      <mat-table [dataSource]="dataSource" matSort #sortC="matSort">
+        <ng-container matColumnDef="companyName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Bus Number</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.companyName}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="accessKey">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Access Key</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.accessKey}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="companyAddress">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Company Address</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.companyAddress}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="companyPhoneNumber">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Phone</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.companyPhoneNumber}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="companyEmail">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.companyEmail}}</mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+        <mat-row *matRowDef="let row;columns:columnList"></mat-row>
+      </mat-table>
+      <mat-paginator #paginatorC  [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+
+    </mat-card-content>
+  </mat-card>
+  <mat-divider></mat-divider>
+  <!--company form-->
+  <mat-card class="mat-elevation-z5" style="margin-top:25px;" *ngIf="companyFormOpen">
+    <mat-card-header >
+      <mat-card-title>Create new company</mat-card-title>
+      <mat-card-subtitle>Fill the form</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+       
+      <form [formGroup]="companyForm" class="fcol-2" (ngSubmit)="createCompanyNew()">
+        <mat-form-field  appearance="fill" class="fw">
+            <mat-label>Company Name</mat-label>
+            <input matInput type="text" formControlName="companyName">
+            <mat-error *ngIf="companyForm.controls['companyName'].hasError('required')">
+              BusPlateNumber is <strong>required</strong>
+            </mat-error>
+          
+          </mat-form-field>
+
+          <mat-form-field  appearance="fill" class="fw">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" formControlName="companyEmail">
+            
+            <mat-error *ngIf="companyForm.controls['companyEmail'].hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="companyForm.touched && companyForm.controls['companyEmail'].hasError('email')">
+              Email is not <strong>valid</strong> 
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field  appearance="fill" class="fw">
+            <mat-label>Address</mat-label>
+            <textarea matInput type="text" formControlName="companyAddress"></textarea>
+            <mat-error *ngIf="companyForm.controls['companyAddress'].hasError('required')">
+              Address is <strong>required</strong>
+            </mat-error>
+          
+        </mat-form-field>
+
+          <mat-form-field  appearance="fill" class="fw">
+            <mat-label>Phone Number</mat-label>
+            <input matInput type="text" formControlName="companyPhoneNumber">
+            <mat-error *ngIf="companyForm.controls['companyPhoneNumber'].hasError('required')">
+                Phone Number is <strong>required</strong>
+            </mat-error>
+            
+          </mat-form-field>
+
+          
+
+          
+         
+          <div  appearance="fill" class="fw">
+            <button type="submit" [disabled]="companyForm.invalid" mat-raised-button color="primary">Save</button>
+          </div>
+          
+      </form>
+ 
+    </mat-card-content>
+    <mat-card-content>
+      <mat-card-actions>
+        <a mat-button [routerLink]="['/home']"><mat-icon>arrow_back</mat-icon> Back to home</a>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
+  <!--end company-->
+  <mat-card class="mat-elevation-z5" style="margin-top:25px;">
+    <mat-card-header>
+      <div mat-card-avatar><img src="../../../assets/group-people-svgrepo-com.svg" /></div>
+      <mat-card-title>Users</mat-card-title>
+      <mat-card-subtitle>Users List</mat-card-subtitle>
+
+    </mat-card-header>
+    <mat-card-content>
+      <div class="link-right">
+        <button type="button"  mat-mini-fab color="warn" (click)="toggleRegform()">
+          <mat-icon *ngIf="!regFormOpen">add</mat-icon>
+          <mat-icon *ngIf="regFormOpen">remove</mat-icon>
+        </button>
+      </div>
+
+      <mat-table [dataSource]="userDataSource" matSort #sortU>
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef >Id</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="userName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.userName}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="role">
+          <mat-header-cell *matHeaderCellDef>Role</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.role}}</mat-cell>
+        </ng-container>
+      
+        <mat-header-row *matHeaderRowDef="columnListU"></mat-header-row>
+        <mat-row *matRowDef="let row;columns:columnListU"></mat-row>
+      </mat-table>
+      <mat-paginator #paginatorU [pageSizeOptions]="[1, 5, 10, 25, 100]" [pageSize]="5" ></mat-paginator>
+
+    </mat-card-content>
+  </mat-card>
+  <div class="reg-form-container" *ngIf="regFormOpen">
+    <mat-card class="mat-elevation-z5">
+      <mat-card-header>
+        <mat-card-title>Register</mat-card-title>
+        <mat-card-subtitle>Fill the form</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+        <form [formGroup]="regForm" class="fcol-2" (ngSubmit)="registerNew()">
+          <mat-form-field appearance="fill" class="fw">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" formControlName="username">
+            <mat-error *ngIf="regForm.controls['username'].hasError('required')">
+              BusPlateNumber is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="regForm.controls['username'].hasError('maxlength')">
+              Type name can be <strong>50</strong> caharcters max
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="fw">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" formControlName="email">
+            <mat-error *ngIf="regForm.controls['email'].hasError('required')">
+              Email is <strong>require</strong>
+            </mat-error>
+            <mat-error *ngIf="regForm.controls['email'].hasError('email')">
+              Email is <strong>invalid</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="fw">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="regForm.controls['password'].hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="fw">
+            <mat-label>Confirm password</mat-label>
+            <input matInput type="password" formControlName="confirmPassword" />
+            <mat-error *ngIf="regForm.controls['confirmPassword'].hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="regForm.controls['confirmPassword'].hasError('compare')">
+              Passwords are not <strong>equal</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="fw">
+            <mat-label>Company</mat-label>
+            <mat-select formControlName="companyId">
+              <mat-option [value]="''">none</mat-option>
+              <mat-option *ngFor="let c of companies" [value]="c.companyId">{{c.companyName}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="regForm.controls['companyId'].hasError('required')">
+              Company is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <div class="fw link-right fit" style="text-align: right;">
+            <button type="submit" mat-raised-button color="primary" style="margin-right: 10px;">Register</button>
+            <button type="button" mat-raised-button color="accent" (click)="toggleRegform()">Cancel</button>
+          </div>
+        </form>
+
+      </mat-card-content>
+      <mat-card-content>
+        <mat-card-actions>
+          <a mat-button [routerLink]="['/buses']">
+            <mat-icon>arrow_back</mat-icon> Back to bus list
+          </a>
+        </mat-card-actions>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

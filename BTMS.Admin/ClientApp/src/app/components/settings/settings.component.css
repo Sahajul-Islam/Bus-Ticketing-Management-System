@@ -1,0 +1,12 @@
+.reg-form-container{
+    width: 100%;
+    margin: 25px auto;
+}
+.fcol-2{
+    display: grid;
+    grid-template-columns: 49% 49%;
+    column-gap: 1rem;
+}
+.fit {
+    align-items: baseline;
+}

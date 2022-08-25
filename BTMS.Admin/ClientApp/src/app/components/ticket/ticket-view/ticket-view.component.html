@@ -1,0 +1,63 @@
+<div class="view-container">
+    <mat-card class="mat-elevation-z5">
+        <mat-card-header >
+            <div mat-card-avatar ><img src="../../../../assets/bus-svgrepo-com.svg" /></div>
+          <mat-card-title>Buses</mat-card-title>
+          <mat-card-subtitle>Bus List</mat-card-subtitle>
+          
+        </mat-card-header>
+        <mat-card-content>
+            
+
+          <mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="bus">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Bus</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.bus}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="bookingDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Booking Time</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.bookingDate|date:'yyy-MM-dd hh:mm a'}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="customer">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Customer</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.customer}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="phone">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Phone</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.phone}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="bookingCode">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Tracking Code</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.bookingCode}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="transactionId">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>transactionId</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <span style="margin-right:15px" *ngIf="!getTrackingEdit(element.bookingId)">{{element.transactionId ? element.transactionId: 'NA'}}</span>
+                        <mat-form-field class="select-100"  appearance="standard" *ngIf="getTrackingEdit(element.bookingId)">
+                           <input matInput [(ngModel)]="element.transactionId" />
+                          </mat-form-field>
+                        <button type="button" mat-icon-button (click)="setTrackingInEditMode(element)"  *ngIf="!getTrackingEdit(element.bookingId)"><mat-icon>edit</mat-icon></button>
+                        <button type="button" mat-icon-button (click)="clearTrackingInEditMode(element.bookingId)"  *ngIf="getTrackingEdit(element.bookingId)"><mat-icon>clear</mat-icon></button>
+                        <button type="button" mat-icon-button (click)="updateTransactionId(element)"  *ngIf="getTrackingEdit(element.bookingId)"><mat-icon>done</mat-icon></button>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="isPaid">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Paid?</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.isPaid ? "Yes": "No"}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef>Action </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <a [routerLink]="['/buses-edit', element.busId]" mat-icon-button><mat-icon>edit</mat-icon></a>
+                    <!-- <button (click)="delete(element)" mat-icon-button color="warn"><mat-icon>delete</mat-icon></button> -->
+                </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+                <mat-row *matRowDef="let row;columns:columnList"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+      
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,69 @@
+<div class="view-container">
+    <mat-card class="mat-elevation-z5">
+        <mat-card-header >
+            <div mat-card-avatar ><img src="../../../../assets/schedule-time-svgrepo-com-2.svg" /></div>
+          <mat-card-title>Schedules [{{date|date: 'yyyy-MMM-dd'}}]</mat-card-title>
+          <mat-card-subtitle>Schedule List</mat-card-subtitle>
+          
+        </mat-card-header>
+        <mat-card-content>
+            <div class="link-right">
+                <a [routerLink]="['/schedule-create']" mat-mini-fab color="warn"><mat-icon>add</mat-icon></a>
+            </div>
+            
+            <form [formGroup]="dateFilterForm" class="filter-form-container" (ngSubmit)="show()">
+                <mat-form-field  appearance="fill" >
+                    <mat-label>Date</mat-label>
+                    <input matInput  formControlName="date" [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker ></mat-datepicker>
+                    <mat-error *ngIf="dateFilterForm.controls['date'].hasError('required')">
+                      Date is <strong>required</strong>
+                    </mat-error>
+                    
+                  </mat-form-field>
+                  <div style="padding-bottom: 7px;">
+                    <button type="submit" [disabled]="dateFilterForm.invalid" mat-raised-button >Show</button>
+                  </div>
+            </form>
+            
+          <mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="journeyDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.journeyDate | date: 'yyyy-MM-dd'}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="departureTime">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Time</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.departureTime | date: 'hh:mm a'}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="minTimeToReportBeforeDeparture">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Reporting</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.minTimeToReportBeforeDeparture}} min before</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="busRoute">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Route</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.busRoute}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="bus">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Bus</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.bus}}</mat-cell>
+                </ng-container>
+               
+                <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef>Action </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <a [routerLink]="['/schedule-edit', element.scheduleId]" mat-icon-button><mat-icon>edit</mat-icon></a>
+                   <a title="Book seat" [routerLink]="['/booking-create',  element.scheduleId]"  mat-icon-button color="warn"><mat-icon>confirmation_number</mat-icon></a>
+                </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+                <mat-row *matRowDef="let row;columns:columnList"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+      
+        </mat-card-content>
+    </mat-card>
+</div>
+   
+
+

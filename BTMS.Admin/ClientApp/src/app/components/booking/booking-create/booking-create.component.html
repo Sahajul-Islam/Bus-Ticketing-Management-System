@@ -1,0 +1,81 @@
+<div class="view-container">
+    <mat-card class="mat-elevation-z5">
+        <mat-card-header >
+            <div mat-card-avatar ><img src="../../../../assets/booking-icon-1.svg" style="width: 40px;" /></div>
+          <mat-card-title>New Booking</mat-card-title>
+          <mat-card-subtitle>Bus List</mat-card-subtitle>
+          
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngIf="bookingSuccess" class="message">
+                <div>{{bookingSuccess}}</div>
+                <div>After payment, update with code: <strong>{{trackCode}}</strong></div>
+            </div>
+            <div class="booking-container">
+                <div class="col-1">
+                    <h3 style="padding-bottom: 5px; border-bottom: solid 1px lightgray;">Select Seat</h3>
+                    <div class="seat-plan" >
+                        
+                        <div class="seat" *ngFor="let x of seats"  >
+                            <a *ngIf="x.seatSerial !=0" [class.disabled]="isDisabled(x)" (click)="selectSeat(x, $event)">
+                                <div style="width: 50px; text-align: center;" class="small">{{x.seatSerial}}</div>
+                                <img src="../../../../assets/seat.svg" style="width: 50px;"  *ngIf="isFree(x)"/>
+                                <img src="../../../../assets/seat-booked.svg" style="width: 50px;"  *ngIf="!isFree(x)"/>
+                                <div style="width: 50px; text-align: center;">
+                                    <mat-icon *ngIf="isFree(x)">remove</mat-icon>
+                                    <mat-icon *ngIf="isBooked(x)">done_all</mat-icon>
+                                    <mat-icon *ngIf="isSelected(x)">done</mat-icon>
+                                </div>
+                            </a>
+                           
+                            <div *ngIf="x.seatSerial ==0"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-2">
+                   <h3>Booking details</h3>
+                   
+                   <div>{{seats[0]?.bus}}</div>
+                   <div>{{seats[0]?.busRoute}}</div>
+                   <div>{{seats[0]?.scheduleTime | date: 'yyyy-MM-dd hh:mm a'}}</div>
+                   <div>Selected seats: {{getSelected()}}</div>
+                   <div>Total AMount: {{getFare()|number: '2.2-2'}}</div>
+                   <form [formGroup]="bookingForm" class="form" (ngSubmit)="saveBooking()">
+                       <h3>Fill the form</h3>
+                    <mat-form-field  appearance="fill" class="fw">
+                        <mat-label>Customer</mat-label>
+                        <input matInput type="text" formControlName="customer">
+                        <mat-error *ngIf="bookingForm.controls['customer'].hasError('required')">
+                          Customer name is <strong>required</strong>
+                        </mat-error>
+                       
+                      </mat-form-field>
+                      <mat-form-field  appearance="fill" class="fw" >
+                        <mat-label>Phone</mat-label>
+                        <input matInput type="text" formControlName="phone">
+                        <mat-error *ngIf="bookingForm.controls['phone'].hasError('required')">
+                          Phone number is <strong>required</strong>
+                        </mat-error>
+                       
+                      </mat-form-field>
+                      <mat-form-field  appearance="fill" class="fw">
+                        <mat-label>E-mail</mat-label>
+                        <input matInput type="text" formControlName="email">
+                        <mat-error *ngIf="bookingForm.controls['email'].hasError('required')">
+                          E-mail is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="bookingForm.controls['email'].hasError('email')">
+                            E-mail is not <strong>valid</strong>
+                          </mat-error>
+                      </mat-form-field>
+                      <div  appearance="fill" class="fw">
+                        <button type="submit" [disabled]="bookingForm.invalid" mat-raised-button color="primary">Save</button>
+                      </div>
+                </form>
+                </div>
+               
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

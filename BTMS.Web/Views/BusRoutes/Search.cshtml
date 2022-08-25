@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SearchViewModel>
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h3>Available buses</h3>
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Bus</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>...</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var s in Model)
+                {
+                    <tr>
+                        <td>@s.Bus</td>
+                        <td>@s.JourneyDate.ToString("yyyy-MM-dd")</td>
+                        <td>@s.DepartureTime.ToString("hh:mm tt")</td>
+                        <td>
+                            <a class="btn btn-outline-success btn-sm" asp-controller="BusRoutes" asp-action="Book" asp-route-id="@s.ScheduleId"><i class="bi bi-ticket-perforated"></i> Book a seat</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+@section styles {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/libs/icons/bootstrap/font/bootstrap-icons.css" />
+    </environment>
+}
+

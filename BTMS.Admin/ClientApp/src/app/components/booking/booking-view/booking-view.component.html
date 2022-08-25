@@ -1,0 +1,63 @@
+<div class="view-container">
+    <mat-card class="mat-elevation-z5">
+        <mat-card-header >
+            <div mat-card-avatar ><img src="../../../../assets/ticket-window-svgrepo-com.svg" style="width: 40px;" /></div>
+          <mat-card-title>Booking [{{date|date: 'yyyy-MMM-dd'}}]</mat-card-title>
+          <mat-card-subtitle>Booking Summary</mat-card-subtitle>
+          
+        </mat-card-header>
+        <mat-card-content>
+           
+            
+            <form [formGroup]="dateFilterForm" class="filter-form-container" (ngSubmit)="show()">
+                <mat-form-field  appearance="fill" >
+                    <mat-label>Date</mat-label>
+                    <input matInput  formControlName="date" [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker ></mat-datepicker>
+                    <mat-error *ngIf="dateFilterForm.controls['date'].hasError('required')">
+                      Date is <strong>required</strong>
+                    </mat-error>
+                    
+                  </mat-form-field>
+                  <div style="padding-bottom: 7px;">
+                    <button type="submit" [disabled]="dateFilterForm.invalid" mat-raised-button >Show</button>
+                  </div>
+            </form>
+            
+          <mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="scheduleTime">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Date/Time</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.scheduleTime | date: 'yyyy-MM-dd hh:mm a'}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="company">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Company</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.company}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="bus">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Bus</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.bus}}</mat-cell>
+                </ng-container>
+               
+                <ng-container matColumnDef="capacity">
+                    <mat-header-cell *matHeaderCellDef>Capacity/Booked </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{element.capacity}}/{{element.totalBooked}}
+                      
+                    </mat-cell>
+                    </ng-container>
+                <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef>Action </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <a [routerLink]="['/booking-create', element.scheduleId]" mat-icon-button><mat-icon>confirmation_number</mat-icon></a>
+                  
+                </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+                <mat-row *matRowDef="let row;columns:columnList"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+      
+        </mat-card-content>
+    </mat-card>
+</div>
